@@ -24,6 +24,7 @@ api.interceptors.response.use(function (response) {
     eventBus.dispatch("AlertSuccess", true);
     return response;
 }, function (error) {
+    eventBus.dispatch("showLoading", false);
     eventBus.dispatch("AlertSuccess", false);
     return Promise.reject(error);
 });
