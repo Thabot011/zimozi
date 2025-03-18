@@ -17,7 +17,7 @@ const HomeComponent = (props: { user?: user, isAdmin: boolean }) => {
     return (
         <div className="container">
             <header className="jumbotron">
-                {props.user && "Welcome " + props.user.fullName}
+                {props.user && "Welcome " + props.user?.fullName}
             </header>
             <ProductComponent removeFromCart={undefined} isCart={false} currentUser={props.user} isAdmin={props.isAdmin} ></ProductComponent>
         </div>

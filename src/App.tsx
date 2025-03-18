@@ -17,7 +17,6 @@ import { style } from "./shared/Shared";
 import { useForm } from "react-hook-form";
 import cartService from "./services/cart.service";
 import cart from "./types/cart";
-import product from "./types/product";
 
 
 function App() {
@@ -41,7 +40,7 @@ function App() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const user = AuthService.getCurrentUser();
+    let user: user | null = AuthService.getCurrentUser();
     const isAdminUser = user?.role == role.admin;
     useEffect(() => {
         if (user) {
@@ -62,7 +61,7 @@ function App() {
             cartService.getCart(false).then((cart: cart) => {
                 if (cart) {
                     cart.userId = user.id;
-                    if (user.shoppingCart.id) {
+                    if (user.shoppingCart?.id) {
                         cart.id = user.shoppingCart.id;
                     }
                     cart.isLogin = true;
@@ -81,6 +80,7 @@ function App() {
                     setCurrentUser(user);
                     AuthService.setCurrentUser(user);
                     setcartIconNumber(user?.shoppingCart?.products?.length as number);
+                    user = user;
                 }
             })
         })
@@ -130,6 +130,7 @@ function App() {
     const logOut = () => {
         AuthService.logout().then(() => {
             setCurrentUser(undefined);
+            user = null;
             setcartIconNumber(0);
             navigate("/");
         });
